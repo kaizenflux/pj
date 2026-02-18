@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Riyu's Birthday Journey ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Homemade+Apple&family=Playfair+Display:ital,wght@0,400;0,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdf6f0;--text:#5a3e3e;--textm:#8a6565;--textl:#b08888;
+  --blush:#f5c6c2;--rose:#e8a0a0;--drose:#c97878;--gold:#d4a574;
+  --wp:#c97878;--ws:#f5c6c2;--wbg:#fdf6f0;--wacc:#d4a574;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cormorant Garamond',serif;background:var(--wbg);color:var(--text);min-height:100vh;overflow-x:hidden;user-select:none;transition:background .8s,color .4s}
+canvas.fx{position:fixed;inset:0;pointer-events:none;z-index:200}
+canvas.bg{position:fixed;inset:0;pointer-events:none;z-index:0}
+
+/* ── Screens ── */
+.scr{display:none;min-height:100vh;position:relative;z-index:2;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.scr.active{display:flex}
+.fadein{animation:fi .8s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes fi{from{opacity:0;transform:translateY(25px) scale(.96);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.cozy-t{font-family:'Dancing Script',cursive;font-size:2.5rem;text-align:center;margin-bottom:6px;color:var(--wp)}
+.cozy-s{font-family:'Patrick Hand',cursive;font-size:1.05rem;color:var(--textl);text-align:center;margin-bottom:22px}
+.cozy-btn{font-family:'Patrick Hand',cursive;font-size:1.05rem;padding:13px 32px;border:none;border-radius:50px;background:linear-gradient(135deg,var(--wp),var(--wacc));color:white;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.1);transition:all .3s}
+.cozy-btn:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.14)}
+.cozy-btn:disabled{opacity:.4;pointer-events:none}
+
+/* ═══ CAKE ═══ */
+.cake-scene{position:relative;width:300px;height:320px;margin:0 auto 10px}
+.cake-table{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:260px;height:16px;background:linear-gradient(180deg,#f5ebe0,#e8ddd0);border-radius:50%;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.cake-plate{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:220px;height:20px;background:white;border-radius:50%;box-shadow:0 3px 10px rgba(0,0,0,.04)}
+.cake-b{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:180px;height:100px;background:linear-gradient(180deg,#fce4ec,#f8bbd0);border-radius:18px 18px 22px 22px;box-shadow:inset 0 -6px 12px rgba(0,0,0,.04)}
+.cake-b::after{content:'';position:absolute;top:6px;left:0;right:0;height:14px;background:linear-gradient(180deg,rgba(255,255,255,.45),transparent);border-radius:18px 18px 0 0}
+.cake-drip{position:absolute;top:-3px;width:14px;height:22px;background:#fff0f0;border-radius:0 0 8px 8px}
+.cake-m{position:absolute;bottom:105px;left:50%;transform:translateX(-50%);width:140px;height:70px;background:linear-gradient(180deg,#fff0f5,#fce4ec);border-radius:14px 14px 16px 16px;box-shadow:inset 0 -4px 8px rgba(0,0,0,.03)}
+.cake-m::after{content:'';position:absolute;top:4px;left:0;right:0;height:10px;background:linear-gradient(180deg,rgba(255,255,255,.5),transparent);border-radius:14px 14px 0 0}
+.cake-top{position:absolute;bottom:163px;left:50%;transform:translateX(-50%);width:100px;height:48px;background:linear-gradient(180deg,#fff5f7,#fce4ec);border-radius:10px 10px 12px 12px}
+.cake-cherry{position:absolute;bottom:205px;left:50%;transform:translateX(-50%);width:18px;height:18px;background:radial-gradient(circle at 35% 35%,#ff8a80,#e53935);border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.cake-cherry::before{content:'';position:absolute;top:-8px;left:50%;width:2px;height:10px;background:#4e342e;transform:translateX(-50%) rotate(8deg);border-radius:1px}
+.candle{position:absolute;cursor:pointer;z-index:10;transition:transform .15s}
+.candle:hover{transform:scale(1.12)}
+.candle-stick{width:8px;height:36px;border-radius:3px 3px 1px 1px;margin:0 auto}
+.candle-wick{width:2px;height:6px;background:#5a3e3e;margin:0 auto;border-radius:1px}
+.flame-w{width:20px;height:24px;margin:-4px auto 0;position:relative}
+.flame{width:12px;height:18px;background:radial-gradient(ellipse at 50% 80%,#fff9c4,#ffe082 40%,#ffb74d 70%,transparent);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;margin:0 auto;filter:blur(.3px);animation:fl .25s ease-in-out infinite alternate;position:relative}
+.flame::before{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:4px;height:6px;background:rgba(255,255,255,.8);border-radius:50%;filter:blur(1px)}
+.flame-glow{position:absolute;inset:-12px;background:radial-gradient(circle,rgba(255,224,130,.35),transparent 70%);border-radius:50%;pointer-events:none}
+@keyframes fl{0%{transform:scaleY(1) scaleX(1) rotate(-3deg)}100%{transform:scaleY(1.08) scaleX(.92) rotate(3deg)}}
+.flame.out{animation:bo .35s ease forwards}
+@keyframes bo{0%{transform:scaleY(1);opacity:1}40%{transform:scaleY(1.6) scaleX(.2) rotate(15deg);opacity:.6}100%{transform:scaleY(0);opacity:0}}
+.flame.out~.flame-glow{animation:gOut .5s ease forwards}
+@keyframes gOut{to{opacity:0}}
+.smoke{position:absolute;width:4px;height:4px;background:rgba(160,150,140,.25);border-radius:50%;opacity:0;left:50%;transform:translateX(-50%)}
+.smoke.go{animation:smk 1.2s ease-out forwards}
+@keyframes smk{0%{opacity:.5;transform:translateX(-50%) translateY(0) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-50px) scale(4)}}
+.cake-glow{position:absolute;inset:-60px;background:radial-gradient(circle at 50% 60%,rgba(255,224,130,.12),transparent 55%);pointer-events:none;transition:opacity 1s}.cake-glow.off{opacity:0}
+
+/* ═══ WORLDS ═══ */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:680px;width:100%}
+.wcard{background:white;border-radius:18px;padding:18px 12px;text-align:center;cursor:pointer;transition:all .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 2px 10px rgba(0,0,0,.05);border:2.5px solid transparent;overflow:hidden;position:relative}
+.wcard:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 8px 28px rgba(0,0,0,.1)}
+.wcard.sel{border-color:var(--wp);box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.wcard .wi{font-size:2.6rem;display:block;margin-bottom:6px;transition:transform .3s}
+.wcard:hover .wi{transform:scale(1.15) rotate(-5deg)}
+.wcard .wn{font-family:'Patrick Hand',cursive;font-size:1rem;font-weight:600;margin-bottom:2px}
+.wcard .wd{font-family:'Caveat',cursive;font-size:.82rem;color:var(--textl);line-height:1.3}
+
+/* ═══ WORLD THEMES ═══ */
+body.t-barbie{--wp:#e75480;--ws:#ffb6c1;--wbg:#fff0f5;--wacc:#ffd700}
+body.t-garden{--wp:#5a9e5f;--ws:#c8e6c9;--wbg:#f1f8e9;--wacc:#ff9800}
+body.t-stars{--wp:#5c6bc0;--ws:#c5cae9;--wbg:#0d1b2a;--wacc:#ffd54f;color:#c5cae9;--text:#c5cae9;--textm:#8e99b0;--textl:#6b7a94}
+body.t-advent{--wp:#8d6e63;--ws:#d7ccc8;--wbg:#f5f0eb;--wacc:#66bb6a}
+body.t-apoth{--wp:#9c27b0;--ws:#e1bee7;--wbg:#f3e5f5;--wacc:#26a69a}
+
+/* ═══ SCENE ═══ */
+.scene{width:100%;max-width:560px;position:relative;margin:0 auto;border-radius:22px;overflow:hidden;background:white;box-shadow:0 4px 24px rgba(0,0,0,.06);min-height:300px;transition:background .4s}
+.scene canvas{display:block;width:100%;height:320px;border-radius:22px 22px 0 0}
+.scene-items{position:absolute;top:0;left:0;right:0;height:320px;pointer-events:none}
+.scene-items>*{pointer-events:auto}
+
+/* ═══ JOURNEY UI ═══ */
+.j-wrap{max-width:560px;width:100%;margin:0 auto}
+.prog{display:flex;align-items:center;gap:0;width:100%;margin:0 auto 20px;padding:0 8px}
+.pd{width:30px;height:30px;border-radius:50%;background:white;border:2px solid var(--ws);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .4s;flex-shrink:0;z-index:2}
+.pd.done{background:var(--wp);border-color:var(--wp);transform:scale(1.05)}
+.pd.cur{border-color:var(--wp);box-shadow:0 0 0 4px rgba(0,0,0,.05);animation:pp 2s ease-in-out infinite}
+@keyframes pp{0%,100%{box-shadow:0 0 0 4px rgba(0,0,0,.04)}50%{box-shadow:0 0 0 8px rgba(0,0,0,.02)}}
+.pl{flex:1;height:3px;background:var(--ws);border-radius:2px;overflow:hidden;position:relative}
+.pl .pf{position:absolute;inset:0;background:var(--wp);transform-origin:left;transition:transform .6s ease}
+
+/* Choices */
+.choices{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:16px}
+.ch{padding:12px 16px;border-radius:14px;background:white;border:2px solid var(--ws);font-family:'Patrick Hand',cursive;font-size:1rem;cursor:pointer;transition:all .3s;text-align:center;min-width:100px}
+.ch:hover{border-color:var(--wp);transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.ch.pk{background:var(--wp);color:white;border-color:var(--wp);pointer-events:none}
+.ch .chi{font-size:1.4rem;display:block;margin-bottom:2px}
+.ch.disabled{opacity:.4;pointer-events:none}
+
+/* Chat */
+.chatbox{padding:0 16px 8px;max-height:200px;overflow-y:auto}
+.cm{margin-bottom:10px;display:flex;gap:8px;align-items:flex-start;opacity:0;animation:mi .35s ease forwards;transform:translateY(8px)}
+@keyframes mi{to{opacity:1;transform:none}}
+.cm.usr{flex-direction:row-reverse}
+.cav{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.cav.ai{background:linear-gradient(135deg,var(--ws),var(--wp))}
+.cav.u{background:var(--ws)}
+.cb{padding:8px 12px;border-radius:14px;font-family:'Patrick Hand',cursive;font-size:.95rem;line-height:1.5;max-width:80%}
+.cb.ai{background:rgba(0,0,0,.04)}
+.cb.u{background:var(--wp);color:white;margin-left:auto}
+.typing span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--textl);animation:td .7s ease-in-out infinite;margin:0 1px}
+.typing span:nth-child(2){animation-delay:.12s}.typing span:nth-child(3){animation-delay:.24s}
+@keyframes td{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-4px);opacity:1}}
+
+.iw{display:flex;gap:8px;padding:8px 16px 16px}
+.iw input{flex:1;padding:11px 16px;font-family:'Patrick Hand',cursive;font-size:1rem;border:2px solid var(--ws);border-radius:50px;background:white;color:var(--text);outline:none;transition:border-color .3s}
+.iw input:focus{border-color:var(--wp)}
+.iw button{width:42px;height:42px;border-radius:50%;border:none;background:var(--wp);color:white;font-size:1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.iw button:hover{transform:scale(1.08)}
+
+/* Collectibles */
+.colbar{display:flex;gap:6px;justify-content:center;padding:10px}
+.col{width:36px;height:36px;border-radius:50%;background:white;border:2px solid var(--ws);display:flex;align-items:center;justify-content:center;font-size:1rem;opacity:.3;transition:all .4s}
+.col.got{opacity:1;border-color:var(--wp);box-shadow:0 2px 8px rgba(0,0,0,.06);animation:cp .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cp{0%{transform:scale(0) rotate(-20deg)}60%{transform:scale(1.3) rotate(5deg)}100%{transform:scale(1)}}
+
+/* Next button */
+.nxt{text-align:center;padding:8px 16px 16px}
+
+/* ═══ WORLD-SPECIFIC SCENE STYLES ═══ */
+
+/* Barbie: vanity table */
+.barbie-shelf{position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(180deg,#ffe4ed,#ffc0d0);border-top:3px solid #ffaabb}
+.barbie-mirror{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:140px;height:130px;border:8px solid #ffd700;border-radius:50% 50% 0 0;background:linear-gradient(180deg,#fff5f8,#ffe8f0);overflow:hidden;box-shadow:0 4px 20px rgba(255,192,203,.4)}
+.barbie-mirror-shine{position:absolute;top:0;left:-30%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);animation:mirrorShine 3s ease-in-out infinite}
+@keyframes mirrorShine{0%,100%{transform:translateX(-100%)}50%{transform:translateX(250%)}}
+.barbie-cauldron{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);width:90px;height:60px;background:radial-gradient(ellipse at 50% 30%,#ff69b4,#c2185b);border-radius:0 0 45px 45px;box-shadow:0 4px 15px rgba(194,24,91,.3);overflow:hidden}
+.barbie-cauldron::before{content:'';position:absolute;top:0;left:0;right:0;height:12px;background:linear-gradient(180deg,#ffd700,#ffb300);border-radius:4px}
+.barbie-bubble{position:absolute;border-radius:50%;background:rgba(255,182,193,.4);animation:bbUp 2s ease-in-out infinite}
+@keyframes bbUp{0%{transform:translateY(0) scale(1);opacity:.6}100%{transform:translateY(-60px) scale(.3);opacity:0}}
+.barbie-bottle{position:absolute;cursor:pointer;transition:all .3s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.1))}
+.barbie-bottle:hover{transform:scale(1.15) rotate(-5deg);filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
+.barbie-bottle.used{opacity:.3;pointer-events:none;transform:scale(.8)}
+.bottle-body{width:28px;height:40px;border-radius:4px 4px 10px 10px;margin:0 auto}
+.bottle-cap{width:14px;height:8px;background:#ffd700;margin:0 auto;border-radius:2px 2px 0 0}
+.bottle-label{font-family:'Caveat',cursive;font-size:.55rem;text-align:center;color:white;margin-top:2px;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+
+/* Garden: soil and growth */
+.garden-ground{position:absolute;bottom:0;left:0;right:0;height:90px;background:linear-gradient(180deg,#8d6e63,#6d4c41);border-radius:0 0 22px 22px}
+.garden-grass{position:absolute;bottom:85px;left:0;right:0;height:20px;background:linear-gradient(180deg,transparent,#a5d6a7)}
+.garden-sky{position:absolute;top:0;left:0;right:0;bottom:90px;background:linear-gradient(180deg,#e8f5e9,#c8e6c9)}
+.garden-sun{position:absolute;top:20px;right:30px;width:50px;height:50px;background:radial-gradient(circle,#fff9c4,#ffee58,#ffca28);border-radius:50%;box-shadow:0 0 30px rgba(255,235,59,.4);animation:sunP 4s ease-in-out infinite}
+@keyframes sunP{0%,100%{box-shadow:0 0 30px rgba(255,235,59,.3)}50%{box-shadow:0 0 50px rgba(255,235,59,.5)}}
+.garden-spot{position:absolute;bottom:30px;width:50px;height:50px;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;transition:transform .2s}
+.garden-spot:hover{transform:scale(1.1)}
+.soil-mound{width:40px;height:18px;background:radial-gradient(ellipse,#795548,#6d4c41);border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+.sprout{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-size:0;transition:font-size .8s cubic-bezier(.34,1.56,.64,1);line-height:1}
+.sprout.grown{font-size:2rem}
+.water-can{position:absolute;top:20px;left:20px;font-size:2rem;cursor:pointer;transition:transform .3s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.1))}
+.water-can:hover{transform:rotate(-20deg) scale(1.1)}
+.water-drop{position:absolute;font-size:.8rem;opacity:0;animation:wdrop .8s ease-out forwards}
+@keyframes wdrop{0%{opacity:.8;transform:translateY(0)}100%{opacity:0;transform:translateY(40px)}}
+
+/* Stars: night sky */
+.stars-sky{position:absolute;inset:0;background:linear-gradient(180deg,#0d1b2a,#1b2838,#162032);border-radius:22px}
+.star-dot{position:absolute;border-radius:50%;background:white;box-shadow:0 0 6px rgba(255,255,255,.5);cursor:pointer;transition:all .4s;opacity:.3}
+.star-dot.placed{opacity:1;animation:starGlow 2s ease-in-out infinite alternate;box-shadow:0 0 12px rgba(255,215,0,.6)}
+.star-dot.active{border:2px solid #ffd54f;transform:scale(1.3)}
+@keyframes starGlow{0%{box-shadow:0 0 6px rgba(255,215,0,.4)}100%{box-shadow:0 0 16px rgba(255,215,0,.7)}}
+.star-line{position:absolute;height:1px;background:linear-gradient(90deg,rgba(255,215,0,.4),rgba(255,215,0,.15));transform-origin:0 0;pointer-events:none}
+.shooting-star{position:absolute;width:3px;height:3px;background:white;border-radius:50%;opacity:0}
+.shooting-star.go{animation:shoot 1.2s ease-out forwards}
+@keyframes shoot{0%{opacity:0;transform:translate(0,0)}10%{opacity:1}100%{opacity:0;transform:translate(150px,80px)}}
+.moon{position:absolute;top:20px;right:30px;width:40px;height:40px;background:radial-gradient(circle at 35% 35%,#fff9c4,#ffd54f);border-radius:50%;box-shadow:0 0 20px rgba(255,213,79,.3)}
+
+/* Adventure: map */
+.adv-bg{position:absolute;inset:0;background:linear-gradient(180deg,#efebe9,#d7ccc8);border-radius:22px}
+.adv-path{position:absolute;bottom:40px;left:0;right:0;height:4px}
+.adv-path-drawn{height:100%;background:var(--wp);border-radius:2px;transition:width 1s ease}
+.adv-stop{position:absolute;bottom:25px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:all .4s}
+.adv-stop.reached{transform:scale(1.2);filter:none}
+.adv-stop.future{opacity:.35;filter:grayscale(.8)}
+.adv-char{position:absolute;bottom:50px;font-size:1.8rem;transition:left 1s ease;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}
+.adv-companion{position:absolute;bottom:45px;font-size:1.2rem;transition:left 1s ease .1s}
+.adv-chest{position:absolute;font-size:2rem;cursor:pointer;transition:all .3s}
+.adv-chest:hover{transform:scale(1.15)}
+.adv-chest.opened{animation:chestOpen .6s ease forwards}
+@keyframes chestOpen{0%{transform:scale(1)}50%{transform:scale(1.3) rotate(-5deg)}100%{transform:scale(1) rotate(0)}}
+.adv-tree{position:absolute;font-size:1.6rem;opacity:.4}
+.adv-cloud{position:absolute;font-size:1.2rem;opacity:.25;animation:cloudDrift 15s ease-in-out infinite}
+@keyframes cloudDrift{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
+
+/* Apothecary: shelves and cauldron */
+.apoth-bg{position:absolute;inset:0;background:linear-gradient(180deg,#2a1a3a,#1a0e2a);border-radius:22px}
+.apoth-shelf{position:absolute;top:30px;left:20px;right:20px;height:3px;background:rgba(255,255,255,.1);border-radius:2px}
+.apoth-cauldron{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);width:100px;height:70px;background:radial-gradient(ellipse at 50% 30%,#4a148c,#311b92);border-radius:0 0 50px 50px;box-shadow:0 4px 15px rgba(49,27,146,.4);overflow:hidden}
+.apoth-cauldron::before{content:'';position:absolute;top:0;left:0;right:0;height:10px;background:linear-gradient(180deg,#616161,#424242);border-radius:4px}
+.apoth-liquid{position:absolute;bottom:0;left:5px;right:5px;height:40px;background:linear-gradient(180deg,rgba(156,39,176,.6),rgba(103,58,183,.8));border-radius:0 0 45px 45px;transition:background 1s,height .5s}
+.apoth-bubble{position:absolute;border-radius:50%;background:rgba(206,147,216,.3);animation:abub 1.8s ease-in-out infinite}
+@keyframes abub{0%{transform:translateY(0) scale(1);opacity:.5}100%{transform:translateY(-50px) scale(.2);opacity:0}}
+.apoth-bottle{position:absolute;top:10px;cursor:pointer;transition:all .3s;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+.apoth-bottle:hover{transform:scale(1.15) translateY(-3px)}
+.apoth-bottle.used{opacity:.2;pointer-events:none}
+.apoth-steam{position:absolute;bottom:110px;left:50%;width:60px;height:60px;transform:translateX(-50%);pointer-events:none}
+.steam-p{position:absolute;width:8px;height:8px;background:rgba(206,147,216,.15);border-radius:50%;animation:steamR 3s ease-out infinite}
+@keyframes steamR{0%{transform:translateY(0) scale(1);opacity:.3}100%{transform:translateY(-60px) scale(2.5);opacity:0}}
+
+/* ═══ VISION BOARD ═══ */
+.vb{max-width:640px;width:100%;margin:0 auto}
+.vb-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.vb-c{background:white;border-radius:14px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.04);border-left:4px solid var(--wp);opacity:0;animation:vbi .5s ease forwards}
+@keyframes vbi{to{opacity:1}}
+.vb-c-i{font-size:1.4rem;margin-bottom:4px}
+.vb-c-t{font-family:'Patrick Hand',cursive;font-size:.9rem;font-weight:600;color:var(--wp);margin-bottom:4px}
+.vb-c textarea{width:100%;border:none;background:transparent;font-family:'Caveat',cursive;font-size:.9rem;color:var(--textm);outline:none;resize:none;min-height:40px;line-height:1.5}
+
+/* ═══ KEEPSAKE ═══ */
+.ks{max-width:520px;width:100%;margin:0 auto;text-align:center}
+.ks-card{background:white;border-radius:22px;padding:32px 24px;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:hidden;position:relative}
+.ks-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--wp),var(--wacc),var(--ws))}
+.ks-label{font-family:'Dancing Script',cursive;font-size:1.8rem;color:var(--wp);margin-bottom:8px}
+.ks-items{display:flex;gap:4px;justify-content:center;margin:10px 0;font-size:1.3rem}
+.ks-wish{font-family:'Homemade Apple',cursive;font-size:1rem;color:var(--wp);margin:14px 0;line-height:1.7}
+.ks-aff{font-family:'Patrick Hand',cursive;font-size:1rem;color:var(--textm);line-height:1.7;padding:14px;background:rgba(0,0,0,.02);border-radius:12px;margin-top:14px}
+
+/* ═══ GEAR ═══ */
+.gear{position:fixed;top:12px;right:12px;font-size:1.1rem;cursor:pointer;z-index:50;opacity:.25;transition:.3s}.gear:hover{opacity:.6}
+.gpan{display:none;position:fixed;top:42px;right:12px;background:white;border-radius:12px;padding:16px;box-shadow:0 6px 24px rgba(0,0,0,.1);z-index:50;width:260px}
+.gpan.open{display:block}
+.gpan label{font-family:'Patrick Hand',cursive;font-size:.85rem;color:var(--textm);display:block;margin-bottom:3px}
+.gpan input{width:100%;padding:7px 10px;border:1.5px solid var(--ws);border-radius:8px;font-family:'Patrick Hand',cursive;font-size:.85rem;outline:none;margin-bottom:8px}
+.back-l{position:fixed;top:12px;left:12px;font-family:'Patrick Hand',cursive;font-size:.85rem;color:var(--textl);text-decoration:none;z-index:50;opacity:.4;transition:.3s}.back-l:hover{opacity:.8}
+
+@media(max-width:600px){
+  .cozy-t{font-size:2rem}
+  .wgrid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .cake-scene{transform:scale(.82);transform-origin:center}
+  .scene canvas{height:260px}
+  .scene-items{height:260px}
+  .vb-g{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<canvas class="bg" id="bgC"></canvas>
+<canvas class="fx" id="fxC"></canvas>
+<a href="/" class="back-l">← back to letter</a>
+<div class="gear" onclick="document.getElementById('gp').classList.toggle('open')">⚙️</div>
+<div class="gpan" id="gp">
+  <label>Gemini API Key</label><input id="gKey" placeholder="AIza...">
+  <label>Model</label><input id="gMod" value="gemini-2.0-flash">
+  <button class="cozy-btn" style="width:100%;font-size:.85rem;padding:6px" onclick="saveG()">Save</button>
+</div>
+
+<!-- S1: CAKE -->
+<div class="scr active fadein" id="Scake">
+  <h1 class="cozy-t" style="color:var(--drose)">🎂 Make a Wish, Riyu!</h1>
+  <p class="cozy-s">Tap each candle to blow it out</p>
+  <div class="cake-scene" id="cakeS">
+    <div class="cake-glow" id="cakeGlow"></div>
+    <div class="cake-table"></div>
+    <div class="cake-plate"></div>
+    <div class="cake-b">
+      <div class="cake-drip" style="left:25%"></div>
+      <div class="cake-drip" style="left:55%"></div>
+      <div class="cake-drip" style="left:78%"></div>
+    </div>
+    <div class="cake-m"></div>
+    <div class="cake-top"></div>
+    <div class="cake-cherry"></div>
+  </div>
+  <p class="cozy-s" id="cakeH">5 candles left...</p>
+</div>
+
+<!-- S2: WISH -->
+<div class="scr" id="Swish">
+  <h1 class="cozy-t" style="color:var(--drose)">✨ Close your eyes...</h1>
+  <p class="cozy-s">Now type your birthday wish</p>
+  <div style="max-width:400px;width:100%;text-align:center">
+    <input class="iw-input" id="wishI" placeholder="I wish..." style="width:100%;padding:14px 20px;font-family:'Homemade Apple',cursive;font-size:1rem;border:2px solid var(--blush);border-radius:50px;background:white;color:var(--text);outline:none;text-align:center;margin-bottom:16px" autocomplete="off">
+    <button class="cozy-btn" onclick="submitWish()">Send My Wish to the Stars 🌟</button>
+  </div>
+</div>
+
+<!-- S3: WORLDS -->
+<div class="scr" id="Sworlds">
+  <h1 class="cozy-t">Choose Your World</h1>
+  <p class="cozy-s">Each path leads to a different kind of magic</p>
+  <div class="wgrid" id="wGrid"></div>
+  <button class="cozy-btn" id="goBtn" style="margin-top:18px" disabled onclick="enterWorld()">Enter Your World →</button>
+</div>
+
+<!-- S4: JOURNEY -->
+<div class="scr" id="Sjourney" style="justify-content:flex-start;padding-top:20px">
+  <div class="j-wrap">
+    <div class="prog" id="prog"></div>
+    <div class="scene" id="scene"><canvas id="sceneC"></canvas><div class="scene-items" id="sceneI"></div></div>
+    <div class="choices" id="choices"></div>
+    <div class="chatbox" id="chatbox"></div>
+    <div class="iw" id="iw" style="display:none">
+      <input id="jIn" placeholder="Type your answer..." autocomplete="off">
+      <button onclick="sendMsg()">→</button>
+    </div>
+    <div class="colbar" id="colbar"></div>
+    <div class="nxt" id="nxtW" style="display:none"><button class="cozy-btn" onclick="nextStop()">Continue →</button></div>
+  </div>
+</div>
+
+<!-- S5: VISION -->
+<div class="scr" id="Svision" style="justify-content:flex-start;padding-top:28px">
+  <h1 class="cozy-t" id="vbT">Riyu's Vision Board</h1>
+  <p class="cozy-s">Your dreams, beautifully collected</p>
+  <div class="vb"><div class="vb-g" id="vbG"></div></div>
+  <button class="cozy-btn" onclick="showKeep()">See Your Keepsake →</button>
+</div>
+
+<!-- S6: KEEPSAKE -->
+<div class="scr" id="Skeep">
+  <div class="ks">
+    <div class="ks-card">
+      <div class="ks-label" id="ksL">Riyu's Dreams</div>
+      <div class="ks-items" id="ksI"></div>
+      <div class="ks-wish" id="ksW"></div>
+      <div class="ks-aff" id="ksA">Loading your birthday affirmation...</div>
+    </div>
+    <div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="cozy-btn" onclick="location.href='/'">← Back to Letter</button>
+      <button class="cozy-btn" style="background:linear-gradient(135deg,var(--wacc),var(--wp))" onclick="restart()">🔄 Try Another World</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   CONFIG - Fetch from server
+   ═══════════════════════════════════════ */
+let gk='',gm='gemini-2.0-flash';
+// Fetch Gemini API key from server
+fetch('/api/config').then(r=>r.json()).then(c=>{if(c.geminiKey)gk=c.geminiKey;document.getElementById('gKey').value=gk}).catch(()=>{});
+document.getElementById('gMod').value=gm;
+function saveG(){gm=document.getElementById('gMod').value;document.getElementById('gp').classList.remove('open')}
+
+/* ═══════════════════════════════════════
+   FX CANVAS
+   ═══════════════════════════════════════ */
+const bgCv=document.getElementById('bgC'),bgX=bgCv.getContext('2d');
+const fxCv=document.getElementById('fxC'),fxX=fxCv.getContext('2d');
+function rsz(){bgCv.width=fxCv.width=innerWidth;bgCv.height=fxCv.height=innerHeight}
+rsz();addEventListener('resize',rsz);
+const bgs=[];for(let i=0;i<30;i++)bgs.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:1+Math.random()*2,vx:(Math.random()-.5)*.15,vy:-.08-Math.random()*.2,a:Math.random(),p:Math.random()*6.28});
+let fxP=[];
+function burst(x,y,n,cols){for(let i=0;i<n;i++){const a=Math.random()*6.28,sp=1+Math.random()*4;fxP.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1,r:1.5+Math.random()*3,life:1,dec:.01+Math.random()*.015,col:cols[~~(Math.random()*cols.length)]})}}
+function confetti(n){for(let i=0;i<n;i++)fxP.push({x:Math.random()*innerWidth,y:-10-Math.random()*80,vx:(Math.random()-.5)*1.5,vy:1.5+Math.random()*3,r:2+Math.random()*3,life:1,dec:.003+Math.random()*.004,col:['#f5c6c2','#e8a0a0','#d4a574','#fce4ec','#ffe0b2','#c8e6c9','#bbdefb','#e1bee7','#fff59d'][~~(Math.random()*9)]})}
+(function loop(){bgX.clearRect(0,0,bgCv.width,bgCv.height);for(const d of bgs){d.x+=d.vx;d.y+=d.vy;d.p+=.015;if(d.y<-10){d.y=bgCv.height+10;d.x=Math.random()*bgCv.width}bgX.beginPath();bgX.arc(d.x,d.y,d.r,0,6.28);bgX.fillStyle='rgba(245,198,194,'+(.15+Math.sin(d.p)*.15)*d.a+')';bgX.fill()}
+fxX.clearRect(0,0,fxCv.width,fxCv.height);for(let i=fxP.length-1;i>=0;i--){const p=fxP[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.03;p.life-=p.dec;fxX.beginPath();fxX.arc(p.x,p.y,p.r,0,6.28);fxX.fillStyle=p.col;fxX.globalAlpha=Math.max(0,p.life);fxX.fill();if(p.life<=0)fxP.splice(i,1)}fxX.globalAlpha=1;requestAnimationFrame(loop)})();
+
+/* ═══════════════════════════════════════
+   SCREEN SWITCH
+   ═══════════════════════════════════════ */
+function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('active','fadein'));const el=document.getElementById(id);el.classList.add('active');void el.offsetWidth;el.classList.add('fadein');scrollTo(0,0)}
+
+/* ═══════════════════════════════════════
+   WORLDS DATA
+   ═══════════════════════════════════════ */
+const W={
+barbie:{name:'Barbie Core Potion Shop',icon:'💅',theme:'t-barbie',desc:'Pink glam, crystals & glow-up magic',
+  icons:['💎','💄','👑','💅','✨'],label:"Riyu's Glow-Up Elixir 2026",
+  bottles:[{col:'#ff69b4',lbl:'Glam'},{col:'#ffd700',lbl:'Power'},{col:'#e040fb',lbl:'Dream'},{col:'#f06292',lbl:'Love'},{col:'#ba68c8',lbl:'Magic'}],
+  stops:[
+    {t:'Choose Your Vibe',s:'Pick the crystal that calls to you',aiQ:"Riyu picked {choice} crystal for her vibe! Ask what about this energy makes her feel most like herself. Warm bestie tone, 2 sentences."},
+    {t:'Power Shade',s:'What color fuels your fire?',aiQ:"Riyu chose {choice} as her power shade! Ask about a moment she felt truly unstoppable. 2 sentences, bestie energy."},
+    {t:'Dream Address',s:'Where does fantasy-Riyu live?',aiQ:"Riyu dreams of living in a {choice}! Ask her to describe her dream morning there. Warm, 2 sentences."},
+    {t:'Main Character Moment',s:'Your ultimate scene this year',aiQ:"Riyu's main character moment is {choice}! Ask her to paint the picture. Excited, 2 sentences."},
+    {t:'Glow-Up Potion Complete!',s:'The final sparkle ingredient',aiQ:"The final ingredient is {choice}! Ask her to describe her perfect dream day. Warm, 2 sentences."},
+  ]},
+garden:{name:'Dream Garden',icon:'🌱',theme:'t-garden',desc:'Grow your dreams like flowers',
+  icons:['🌹','🌻','🌷','🌺','🌸'],label:"Riyu's Dream Garden 2026",
+  flowers:['🌹','🌻','🌷','🌺','🌸'],
+  stops:[
+    {t:'Plant a Seed',s:'Tap the soil to plant your first dream',aiQ:"Riyu planted a seed of {choice}! Ask what about this new beginning makes her heart flutter. Warm, 2 sentences."},
+    {t:'Water with Dreams',s:'What do you want to nurture?',aiQ:"Riyu waters her garden with {choice}! Ask what this looks like fully bloomed. 2 sentences."},
+    {t:'Sunshine',s:'Who helps you bloom?',aiQ:"Riyu's sunshine is {choice}! Ask about a moment with them that made her feel loved. Gentle, 2 sentences."},
+    {t:'Pull the Weeds',s:'What are you letting go of?',aiQ:"Riyu pulls the weed of {choice}! Ask what she'd say to herself a year from now about letting this go. 2 sentences."},
+    {t:'Harvest Season',s:'Your garden is blooming!',aiQ:"Riyu's harvest is {choice}! Ask her to describe life when this garden is in full bloom. Poetic, 2 sentences."},
+  ]},
+stars:{name:'Star Map Observatory',icon:'✨',theme:'t-stars',desc:'Map your dreams across the night sky',
+  icons:['⭐','🌟','💫','✨','🌙'],label:"Riyu's Constellation 2026",
+  stops:[
+    {t:'Catch a Star',s:'Tap a star to claim your first wish',aiQ:"Riyu caught the star of {choice}! Ask what this looks like landing in her life. Dreamy, 2 sentences."},
+    {t:'North Star',s:'What gives you direction?',aiQ:"Riyu's north star is {choice}! Ask when this guided her to where she needed to be. 2 sentences."},
+    {t:'Your Constellation',s:'What shapes your story?',aiQ:"Riyu's constellation is shaped by {choice}! Ask how this defined her journey. Cosmic warmth, 2 sentences."},
+    {t:'Shooting Star',s:'Where does your heart travel?',aiQ:"Riyu's star flies toward {choice}! Ask about the one moment she dreams of there. 2 sentences."},
+    {t:'Supernova',s:'Your brightest explosion of energy',aiQ:"Riyu's supernova is {choice}! Ask what message she'd send the universe about who she's becoming. Epic, 2 sentences."},
+  ]},
+adventure:{name:'Adventure Map',icon:'🗺️',theme:'t-advent',desc:'A treasure hunt through your dreams',
+  icons:['💎','🗝️','🪶','🐚','👑'],label:"Riyu's Treasure Map 2026",
+  companions:['🦊','🐰','🦉','🐱'],
+  stops:[
+    {t:'Choose Companion',s:'Who joins your quest?',aiQ:"Riyu chose the {choice} as her companion! Ask what she values most in those who walk beside her. 2 sentences."},
+    {t:'First Treasure',s:'Open the chest — what do you seek?',aiQ:"Riyu found {choice} in the chest! Ask what finding this would change. Explorer energy, 2 sentences."},
+    {t:'Mountain Peak',s:'What summit will you reach?',aiQ:"Riyu climbs toward {choice}! Ask what the view from the top looks like. Encouraging, 2 sentences."},
+    {t:'River Crossing',s:'What fear will you brave?',aiQ:"Riyu crosses the river of {choice}! Ask what she'd tell her younger self about this. Brave and tender, 2 sentences."},
+    {t:'Final Treasure',s:'The greatest treasure of all',aiQ:"Riyu's treasure is {choice}! Ask what story she tells about 2026 by a campfire. Warm, 2 sentences."},
+  ]},
+apothecary:{name:'Mystic Apothecary',icon:'🧪',theme:'t-apoth',desc:'Brew a magical potion for the year ahead',
+  icons:['🔮','🌿','🫧','💜','⚗️'],label:"Riyu's Dream Potion 2026",
+  ingredients:['🔮','🌿','🫧','💜','⚗️'],
+  stops:[
+    {t:'Base Ingredient',s:'Choose the foundation of your potion',aiQ:"Riyu's potion base is {choice}! Ask why this feels like the right foundation. Wise mystic warmth, 2 sentences."},
+    {t:'A Drop of Courage',s:'What brave thing will you do?',aiQ:"Riyu adds courage for {choice}! Ask how future-Riyu feels after doing it. Encouraging, 2 sentences."},
+    {t:'Essence of Wonder',s:'Your wildest dream',aiQ:"Riyu adds the essence of {choice}! Ask for the most magical version of this dream. Whimsical, 2 sentences."},
+    {t:'Secret Ingredient',s:'Something only you know about yourself',aiQ:"Riyu's secret ingredient is {choice}! Ask about a time this surprised everyone. Intimate, 2 sentences."},
+    {t:'Name Your Potion',s:'The final enchantment',aiQ:"Riyu names her potion {choice}! Ask what changes about tomorrow morning. Magical, 2 sentences."},
+  ]}
+};
+
+// Choice sets per world per stop
+const CHOICES={
+barbie:[[{i:'💎',l:'Glam Crystal'},{i:'🌊',l:'Ocean Gem'},{i:'🔮',l:'Mystic Orb'},{i:'💖',l:'Heart Stone'}],[{i:'❤️',l:'Bold Red'},{i:'💜',l:'Royal Purple'},{i:'🩷',l:'Hot Pink'},{i:'🧡',l:'Fierce Orange'}],[{i:'🏙️',l:'Penthouse'},{i:'🏖️',l:'Beach Villa'},{i:'🏡',l:'Cottage'},{i:'🏰',l:'Castle'}],[{i:'🎤',l:'Stage Moment'},{i:'✈️',l:'Travel Reveal'},{i:'💼',l:'Boss Move'},{i:'💕',l:'Love Scene'}],[{i:'🧘',l:'Peace'},{i:'🎉',l:'Adventure'},{i:'💝',l:'Love'},{i:'⭐',l:'Success'}]],
+garden:[[{i:'💼',l:'New Career'},{i:'✈️',l:'New Places'},{i:'💕',l:'New Love'},{i:'🎨',l:'New Passion'}],[{i:'💪',l:'Strength'},{i:'🧠',l:'Wisdom'},{i:'❤️',l:'Relationships'},{i:'✨',l:'Creativity'}],[{i:'👨‍👩‍👧',l:'Family'},{i:'👯',l:'Friends'},{i:'💑',l:'Partner'},{i:'🪞',l:'Myself'}],[{i:'😰',l:'Self-doubt'},{i:'😤',l:'Toxic Energy'},{i:'😔',l:'Past Regrets'},{i:'😫',l:'Overthinking'}],[{i:'🌈',l:'Joy'},{i:'🏆',l:'Achievement'},{i:'🤗',l:'Connection'},{i:'🦋',l:'Freedom'}]],
+stars:[[{i:'💕',l:'Love'},{i:'🏆',l:'Success'},{i:'🌍',l:'Adventure'},{i:'🧘',l:'Peace'}],[{i:'❤️',l:'Passion'},{i:'👨‍👩‍👧',l:'Family'},{i:'🎯',l:'Purpose'},{i:'💭',l:'Curiosity'}],[{i:'🦁',l:'Courage'},{i:'🤍',l:'Kindness'},{i:'🔥',l:'Ambition'},{i:'🌊',l:'Resilience'}],[{i:'🗼',l:'Paris'},{i:'🗻',l:'Mountains'},{i:'🏝️',l:'Islands'},{i:'🌸',l:'Japan'}],[{i:'🎤',l:'Voice'},{i:'🎨',l:'Creation'},{i:'💪',l:'Power'},{i:'💝',l:'Love'}]],
+adventure:[[{i:'🦊',l:'Clever Fox'},{i:'🐰',l:'Brave Bunny'},{i:'🦉',l:'Wise Owl'},{i:'🐱',l:'Curious Cat'}],[{i:'💰',l:'Abundance'},{i:'📖',l:'Knowledge'},{i:'❤️',l:'Deep Love'},{i:'🌟',l:'Recognition'}],[{i:'💼',l:'Career Goal'},{i:'🏋️',l:'Health Goal'},{i:'🎓',l:'Learning Goal'},{i:'❤️',l:'Love Goal'}],[{i:'😰',l:'Failure'},{i:'💔',l:'Rejection'},{i:'🌀',l:'Change'},{i:'🗣️',l:'Speaking Up'}],[{i:'🏠',l:'Belonging'},{i:'🦋',l:'Freedom'},{i:'🤝',l:'Trust'},{i:'💖',l:'Self-love'}]],
+apothecary:[[{i:'💕',l:'Love'},{i:'💪',l:'Strength'},{i:'🧠',l:'Clarity'},{i:'✨',l:'Magic'}],[{i:'🎤',l:'Speak Up'},{i:'✈️',l:'Take a Leap'},{i:'💔',l:'Be Vulnerable'},{i:'🆕',l:'Start Fresh'}],[{i:'🌍',l:'See the World'},{i:'📖',l:'Write a Story'},{i:'🏠',l:'Build a Home'},{i:'⭐',l:'Be Famous'}],[{i:'🔥',l:'Hidden Fire'},{i:'💎',l:'Secret Talent'},{i:'🌊',l:'Deep Calm'},{i:'🦋',l:'Quiet Power'}],[{i:'🌅',l:'Dawn'},{i:'🌙',l:'Moonlight'},{i:'⚡',l:'Lightning'},{i:'🌸',l:'Bloom'}]]
+};
+
+/* ═══════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════ */
+let world=null,stop=0,wish='',answers=[],companionChoice='🦊';
+
+/* ═══════════════════════════════════════
+   S1: CAKE
+   ═══════════════════════════════════════ */
+let cLeft=5;
+function buildCake(){
+  const cs=document.getElementById('cakeS');
+  const pos=[{x:150,y:218},{x:122,y:208},{x:178,y:208},{x:108,y:180},{x:192,y:180}];
+  const cols=['#f8bbd0','#ce93d8','#90caf9','#a5d6a7','#ffe082'];
+  pos.forEach((p,i)=>{
+    const c=document.createElement('div');c.className='candle';
+    c.style.cssText='left:'+(p.x-4)+'px;bottom:'+(320-p.y)+'px';
+    c.innerHTML='<div class="flame-w"><div class="flame" id="fl'+i+'"></div><div class="flame-glow"></div></div><div class="candle-wick"></div><div class="candle-stick" style="background:linear-gradient(180deg,'+cols[i]+','+cols[i]+'cc)"></div>';
+    c.onclick=()=>blowC(i,c);cs.appendChild(c);
+  });
+}
+function blowC(i,el){
+  const f=document.getElementById('fl'+i);if(!f||f.classList.contains('out'))return;
+  f.classList.add('out');
+  const sm=document.createElement('div');sm.className='smoke go';el.querySelector('.flame-w').appendChild(sm);setTimeout(()=>sm.remove(),1200);
+  const r=el.getBoundingClientRect();
+  burst(r.left+10,r.top,10,['#ffe082','#ffb74d','#ff8a65','#fff9c4']);
+  cLeft--;
+  document.getElementById('cakeH').textContent=cLeft>0?cLeft+' candle'+(cLeft>1?'s':'')+' left...':'🎉 Make a wish!';
+  if(cLeft===0){document.getElementById('cakeGlow').classList.add('off');confetti(50);setTimeout(()=>show('Swish'),1400)}
+}
+buildCake();
+
+/* ═══════════════════════════════════════
+   S2: WISH
+   ═══════════════════════════════════════ */
+function submitWish(){wish=document.getElementById('wishI').value.trim()||'a beautiful year ahead';burst(innerWidth/2,innerHeight/2,25,['#ffd54f','#ffe082','#fff9c4']);setTimeout(()=>{buildWorlds();show('Sworlds')},600)}
+document.getElementById('wishI').onkeydown=e=>{if(e.key==='Enter')submitWish()};
+
+/* ═══════════════════════════════════════
+   S3: WORLD SELECT
+   ═══════════════════════════════════════ */
+function buildWorlds(){
+  const g=document.getElementById('wGrid');g.innerHTML='';
+  Object.entries(W).forEach(([k,w])=>{
+    const c=document.createElement('div');c.className='wcard';
+    c.innerHTML='<span class="wi">'+w.icon+'</span><div class="wn">'+w.name+'</div><div class="wd">'+w.desc+'</div>';
+    c.onclick=()=>{document.querySelectorAll('.wcard').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');world=k;document.getElementById('goBtn').disabled=false};
+    g.appendChild(c);
+  });
+}
+
+function enterWorld(){
+  if(!world)return;
+  document.body.className=W[world].theme;
+  stop=0;answers=[];
+  buildProg();buildColbar();buildScene();loadStop();
+  show('Sjourney');
+}
+
+/* ═══════════════════════════════════════
+   PROGRESS & COLLECTIBLES
+   ═══════════════════════════════════════ */
+function buildProg(){
+  const p=document.getElementById('prog');p.innerHTML='';
+  W[world].stops.forEach((_,i)=>{
+    if(i>0){const l=document.createElement('div');l.className='pl';l.innerHTML='<div class="pf" style="transform:scaleX(0)"></div>';p.appendChild(l)}
+    const d=document.createElement('div');d.className='pd'+(i===0?' cur':'');d.textContent=W[world].icons[i];p.appendChild(d);
+  });
+}
+function updProg(){
+  document.querySelectorAll('.pd').forEach((d,i)=>{d.classList.remove('cur','done');if(i<stop)d.classList.add('done');if(i===stop)d.classList.add('cur')});
+  document.querySelectorAll('.pf').forEach((f,i)=>{f.style.transform=i<stop?'scaleX(1)':'scaleX(0)'});
+}
+function buildColbar(){
+  const b=document.getElementById('colbar');b.innerHTML='';
+  W[world].icons.forEach((ic,i)=>{const c=document.createElement('div');c.className='col';c.id='cl'+i;c.textContent=ic;b.appendChild(c)});
+}
+function earnCol(i){const c=document.getElementById('cl'+i);if(c)c.classList.add('got');const r=c?.getBoundingClientRect();if(r)burst(r.left+18,r.top+18,8,['#ffe082','#ffd54f'])}
+
+/* ═══════════════════════════════════════
+   SCENE BUILDERS — unique per world
+   ═══════════════════════════════════════ */
+const scnCv=document.getElementById('sceneC'),scnX=scnCv.getContext('2d');
+let scnW=560,scnH=320,scnAnim=null;
+function initScnCv(){const rect=scnCv.parentElement.getBoundingClientRect();scnW=rect.width;scnH=innerWidth<=600?260:320;scnCv.width=scnW*2;scnCv.height=scnH*2;scnCv.style.height=scnH+'px';scnX.scale(2,2)}
+
+function buildScene(){
+  const si=document.getElementById('sceneI');si.innerHTML='';
+  if(scnAnim)cancelAnimationFrame(scnAnim);
+  initScnCv();
+  const builders={barbie:buildBarbie,garden:buildGarden,stars:buildStars,adventure:buildAdventure,apothecary:buildApoth};
+  (builders[world]||buildBarbie)();
+}
+
+/* ── BARBIE ── */
+let bBubbles=[];
+function buildBarbie(){
+  const si=document.getElementById('sceneI');
+  si.innerHTML='<div class="barbie-mirror"><div class="barbie-mirror-shine"></div><div id="mirrorTxt" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Caveat,cursive;font-size:.9rem;color:#e75480;text-align:center;padding:15px;opacity:0;transition:opacity .8s"></div></div><div class="barbie-cauldron" id="bCauldron"></div><div class="barbie-shelf"></div>';
+  // Bottles on shelf
+  const cols=['#ff69b4','#ffd700','#e040fb','#f06292','#ba68c8'];
+  const lbls=['Glam','Power','Dream','Love','Magic'];
+  cols.forEach((col,i)=>{
+    const b=document.createElement('div');b.className='barbie-bottle';b.id='bb'+i;
+    const xp=15+i*(scnW<400?16:18)+'%';
+    b.style.cssText='left:'+xp+';bottom:82px';
+    b.innerHTML='<div class="bottle-cap"></div><div class="bottle-body" style="background:linear-gradient(180deg,'+col+'cc,'+col+')"></div><div class="bottle-label">'+lbls[i]+'</div>';
+    si.appendChild(b);
+  });
+  // Bubbles
+  bBubbles=[];for(let i=0;i<6;i++)bBubbles.push({x:Math.random()*70+15,y:50+Math.random()*10,r:3+Math.random()*5,sp:.3+Math.random()*.5,p:Math.random()*6.28});
+  animBarbie();
+}
+function animBarbie(){
+  scnX.clearRect(0,0,scnW,scnH);
+  // Pink gradient bg
+  const g=scnX.createLinearGradient(0,0,0,scnH);g.addColorStop(0,'#fff0f5');g.addColorStop(1,'#ffe4ed');
+  scnX.fillStyle=g;scnX.fillRect(0,0,scnW,scnH);
+  // Glitter
+  for(let i=0;i<12;i++){scnX.beginPath();const x=Math.random()*scnW,y=Math.random()*scnH;scnX.arc(x,y,1,0,6.28);scnX.fillStyle='rgba(255,215,0,'+(Math.random()*.3)+')';scnX.fill()}
+  // Bubbles in cauldron area
+  bBubbles.forEach(b=>{b.y-=b.sp;b.p+=.05;if(b.y<0){b.y=scnH-80;b.x=scnW/2-30+Math.random()*60}scnX.beginPath();scnX.arc(b.x+scnW/2-35,b.y,b.r,0,6.28);scnX.fillStyle='rgba(255,182,193,'+(0.1+Math.sin(b.p)*.1)+')';scnX.fill()});
+  scnAnim=requestAnimationFrame(animBarbie);
+}
+
+/* ── GARDEN ── */
+let gardenFlowers=[];
+function buildGarden(){
+  const si=document.getElementById('sceneI');
+  si.innerHTML='<div class="garden-sky"></div><div class="garden-sun"></div><div class="garden-grass"></div><div class="garden-ground"></div>';
+  // Soil spots
+  const spots=5;gardenFlowers=[];
+  for(let i=0;i<spots;i++){
+    const sp=document.createElement('div');sp.className='garden-spot';sp.id='gs'+i;
+    sp.style.left=(10+i*17)+'%';
+    sp.innerHTML='<div class="soil-mound"></div><div class="sprout" id="gf'+i+'"></div>';
+    si.appendChild(sp);
+    gardenFlowers.push({grown:false});
+  }
+  // Watering can
+  const wc=document.createElement('div');wc.className='water-can';wc.id='waterCan';wc.textContent='🚿';wc.style.display='none';
+  si.appendChild(wc);
+  animGarden();
+}
+function growFlower(idx,emoji){
+  const sp=document.getElementById('gf'+idx);
+  if(sp){sp.textContent=emoji;sp.classList.add('grown');gardenFlowers[idx].grown=true}
+}
+function animGarden(){
+  scnX.clearRect(0,0,scnW,scnH);
+  const g=scnX.createLinearGradient(0,0,0,scnH);g.addColorStop(0,'#e8f5e9');g.addColorStop(.7,'#c8e6c9');g.addColorStop(1,'#8d6e63');
+  scnX.fillStyle=g;scnX.fillRect(0,0,scnW,scnH);
+  // Clouds
+  scnX.fillStyle='rgba(255,255,255,.3)';
+  [[80,30,35],[200,20,25],[350,40,30]].forEach(([x,y,r])=>{scnX.beginPath();scnX.arc(x,y,r,0,6.28);scnX.arc(x+r*.7,y-5,r*.7,0,6.28);scnX.arc(x-r*.5,y+3,r*.6,0,6.28);scnX.fill()});
+  scnAnim=requestAnimationFrame(animGarden);
+}
+
+/* ── STARS ── */
+let starDots=[],starLines=[];
+function buildStars(){
+  const si=document.getElementById('sceneI');
+  si.innerHTML='<div class="moon"></div>';
+  // Pre-place dim stars
+  starDots=[];starLines=[];
+  const positions=[[15,25],[40,15],[65,20],[30,55],[55,50]];
+  positions.forEach((p,i)=>{
+    const s=document.createElement('div');s.className='star-dot';s.id='sd'+i;
+    s.style.cssText='left:'+p[0]+'%;top:'+p[1]+'%;width:10px;height:10px';
+    si.appendChild(s);
+    starDots.push({x:p[0],y:p[1],el:s,placed:false});
+  });
+  animStars();
+}
+function placeStar(idx){
+  const s=starDots[idx];if(!s||s.placed)return;
+  s.placed=true;s.el.classList.add('placed');
+  // Draw line to previous
+  if(idx>0){
+    const prev=starDots[idx-1];
+    const si=document.getElementById('sceneI');
+    const line=document.createElement('div');line.className='star-line';
+    const dx=s.x-prev.x,dy=s.y-prev.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    const angle=Math.atan2(dy,dx);
+    line.style.cssText='left:'+prev.x+'%;top:'+prev.y+'%;width:'+dist+'%;transform:rotate('+angle+'rad);opacity:0';
+    si.appendChild(line);
+    setTimeout(()=>line.style.opacity='1',50);
+    line.style.transition='opacity .6s';
+  }
+  // Shooting star
+  const ss=document.createElement('div');ss.className='shooting-star go';
+  ss.style.cssText='left:'+Math.random()*50+'%;top:'+Math.random()*20+'%';
+  document.getElementById('sceneI').appendChild(ss);setTimeout(()=>ss.remove(),1500);
+}
+function animStars(){
+  scnX.clearRect(0,0,scnW,scnH);
+  const g=scnX.createLinearGradient(0,0,0,scnH);g.addColorStop(0,'#0d1b2a');g.addColorStop(1,'#1b2838');
+  scnX.fillStyle=g;scnX.fillRect(0,0,scnW,scnH);
+  // Twinkle stars
+  for(let i=0;i<50;i++){const x=((i*73+17)%100)/100*scnW,y=((i*47+31)%100)/100*scnH;scnX.beginPath();scnX.arc(x,y,.5+Math.random(),0,6.28);scnX.fillStyle='rgba(255,255,255,'+(0.1+Math.random()*.4)+')';scnX.fill()}
+  scnAnim=requestAnimationFrame(animStars);
+}
+
+/* ── ADVENTURE ── */
+let advCharX=8;
+function buildAdventure(){
+  const si=document.getElementById('sceneI');
+  si.innerHTML='';
+  // Trees and clouds
+  ['🌲','🌳','🌲','🌳','🌲'].forEach((t,i)=>{const tr=document.createElement('div');tr.className='adv-tree';tr.textContent=t;tr.style.cssText='left:'+(5+i*20)+'%;top:'+(30+Math.random()*20)+'%;font-size:'+(1.2+Math.random()*.8)+'rem';si.appendChild(tr)});
+  ['☁️','☁️','☁️'].forEach((c,i)=>{const cl=document.createElement('div');cl.className='adv-cloud';cl.textContent=c;cl.style.cssText='left:'+(10+i*30)+'%;top:'+(5+Math.random()*15)+'%;animation-delay:'+i*3+'s';si.appendChild(cl)});
+  // Path
+  const path=document.createElement('div');path.className='adv-path';path.style.cssText='left:5%;right:5%';
+  path.innerHTML='<div class="adv-path-drawn" id="advPath" style="width:0%"></div>';
+  si.appendChild(path);
+  // Stops
+  const icons=['🏕️','📦','⛰️','🌊','👑'];
+  icons.forEach((ic,i)=>{const s=document.createElement('div');s.className='adv-stop future';s.id='as'+i;s.textContent=ic;s.style.left=(5+i*22)+'%';si.appendChild(s)});
+  // Character
+  advCharX=5;
+  const ch=document.createElement('div');ch.className='adv-char';ch.id='advChar';ch.textContent='🧑';ch.style.left=advCharX+'%';si.appendChild(ch);
+  const comp=document.createElement('div');comp.className='adv-companion';comp.id='advComp';comp.textContent=companionChoice;comp.style.left=(advCharX-4)+'%';si.appendChild(comp);
+  animAdv();
+}
+function advMove(stopIdx){
+  const x=5+stopIdx*22;advCharX=x;
+  document.getElementById('advChar').style.left=x+'%';
+  document.getElementById('advComp').style.left=(x-4)+'%';
+  document.getElementById('advPath').style.width=(stopIdx*25)+'%';
+  const s=document.getElementById('as'+stopIdx);if(s){s.classList.remove('future');s.classList.add('reached')}
+}
+function animAdv(){
+  scnX.clearRect(0,0,scnW,scnH);
+  const g=scnX.createLinearGradient(0,0,0,scnH);g.addColorStop(0,'#e3f2fd');g.addColorStop(.6,'#c8e6c9');g.addColorStop(1,'#a1887f');
+  scnX.fillStyle=g;scnX.fillRect(0,0,scnW,scnH);
+  // Rolling hills
+  scnX.fillStyle='#a5d6a7';scnX.beginPath();scnX.moveTo(0,scnH*.65);
+  for(let x=0;x<=scnW;x+=20){scnX.lineTo(x,scnH*.65+Math.sin(x*.01)*15)}
+  scnX.lineTo(scnW,scnH);scnX.lineTo(0,scnH);scnX.fill();
+  scnAnim=requestAnimationFrame(animAdv);
+}
+
+/* ── APOTHECARY ── */
+let apothBub=[];
+function buildApoth(){
+  const si=document.getElementById('sceneI');
+  si.innerHTML='<div class="apoth-bg"></div><div class="apoth-shelf"></div><div class="apoth-shelf" style="top:70px"></div><div class="apoth-cauldron"><div class="apoth-liquid" id="apLiq"></div></div>';
+  // Steam
+  const steam=document.createElement('div');steam.className='apoth-steam';
+  for(let i=0;i<4;i++){const p=document.createElement('div');p.className='steam-p';p.style.cssText='left:'+(10+Math.random()*40)+'px;animation-delay:'+(i*.7)+'s;animation-duration:'+(2+Math.random()*2)+'s';steam.appendChild(p)}
+  si.appendChild(steam);
+  // Bottles on shelves
+  const cols=['#9c27b0','#26a69a','#f44336','#ff9800','#2196f3'];
+  const lbls=['Spirit','Herb','Fire','Sun','Moon'];
+  cols.forEach((c,i)=>{
+    const b=document.createElement('div');b.className='apoth-bottle';b.id='ab'+i;
+    const row=i<3?0:1;const xi=i<3?i:i-3;
+    b.style.cssText='left:'+(15+xi*25)+'%;top:'+(row===0?5:45)+'px';
+    b.innerHTML='<div style="width:10px;height:6px;background:#616161;margin:0 auto;border-radius:2px 2px 0 0"></div><div style="width:24px;height:32px;border-radius:3px 3px 8px 8px;background:linear-gradient(180deg,'+c+'aa,'+c+');margin:0 auto"></div><div style="font-family:Caveat,cursive;font-size:.5rem;color:rgba(255,255,255,.7);text-align:center;margin-top:1px">'+lbls[i]+'</div>';
+    si.appendChild(b);
+  });
+  apothBub=[];for(let i=0;i<5;i++)apothBub.push({x:scnW/2-30+Math.random()*60,y:scnH-50,r:2+Math.random()*4,sp:.2+Math.random()*.4,p:Math.random()*6.28});
+  animApoth();
+}
+function apothAdd(stopIdx){
+  // Change liquid color progressively
+  const cols=['rgba(156,39,176,.6)','rgba(38,166,154,.5)','rgba(233,30,99,.5)','rgba(255,152,0,.5)','rgba(103,58,183,.7)'];
+  const liq=document.getElementById('apLiq');
+  if(liq){liq.style.height=(40+stopIdx*5)+'px';liq.style.background='linear-gradient(180deg,'+cols[stopIdx%cols.length]+',rgba(103,58,183,.8))'}
+  const bot=document.getElementById('ab'+stopIdx);if(bot)bot.classList.add('used');
+}
+function animApoth(){
+  scnX.clearRect(0,0,scnW,scnH);
+  const g=scnX.createLinearGradient(0,0,0,scnH);g.addColorStop(0,'#1a0e2a');g.addColorStop(1,'#2a1a3a');
+  scnX.fillStyle=g;scnX.fillRect(0,0,scnW,scnH);
+  // Mystical particles
+  for(let i=0;i<8;i++){scnX.beginPath();const x=Math.random()*scnW,y=Math.random()*scnH;scnX.arc(x,y,1,0,6.28);scnX.fillStyle='rgba(206,147,216,'+(Math.random()*.2)+')';scnX.fill()}
+  // Bubbles
+  apothBub.forEach(b=>{b.y-=b.sp;b.p+=.04;if(b.y<scnH-130){b.y=scnH-50;b.x=scnW/2-30+Math.random()*60}scnX.beginPath();scnX.arc(b.x,b.y,b.r,0,6.28);scnX.fillStyle='rgba(206,147,216,'+(0.08+Math.sin(b.p)*.08)+')';scnX.fill()});
+  scnAnim=requestAnimationFrame(animApoth);
+}
+
+/* ═══════════════════════════════════════
+   JOURNEY ENGINE
+   ═══════════════════════════════════════ */
+function loadStop(){
+  const w=W[world],s=w.stops[stop];
+  const chs=CHOICES[world][stop];
+  document.getElementById('choices').innerHTML='';
+  document.getElementById('chatbox').innerHTML='';
+  document.getElementById('iw').style.display='none';
+  document.getElementById('nxtW').style.display='none';
+  updProg();
+
+  // Delay choices slightly for scene to breathe
+  setTimeout(()=>{
+    const cd=document.getElementById('choices');
+    // Title as first chat msg
+    addChat('ai','✨ <b>'+s.t+'</b><br><i>'+s.s+'</i>');
+    chs.forEach(c=>{
+      const btn=document.createElement('div');btn.className='ch';
+      btn.innerHTML='<div class="chi">'+c.i+'</div>'+c.l;
+      btn.onclick=()=>pick(c,btn);
+      cd.appendChild(btn);
+    });
+  },400);
+}
+
+function pick(ch,btn){
+  document.querySelectorAll('.ch').forEach(c=>c.classList.add('disabled'));
+  btn.classList.remove('disabled');btn.classList.add('pk');
+  const r=btn.getBoundingClientRect();
+  burst(r.left+r.width/2,r.top+r.height/2,12,['#ffe082','#fff9c4','#ffb74d']);
+
+  // World-specific visual updates
+  if(world==='garden')growFlower(stop,W.garden.flowers[stop]);
+  if(world==='stars')placeStar(stop);
+  if(world==='adventure'){if(stop===0)companionChoice=ch.i;advMove(stop)}
+  if(world==='apothecary')apothAdd(stop);
+  if(world==='barbie'){const mt=document.getElementById('mirrorTxt');if(mt){mt.textContent=ch.l;mt.style.opacity='1'}}
+
+  // AI question
+  addChat('ai','typing');
+  const prompt=W[world].stops[stop].aiQ.replace('{choice}',ch.l);
+  setTimeout(()=>{rmTyping();askAI(prompt,ch.l)},800);
+}
+
+function addChat(who,txt){
+  const box=document.getElementById('chatbox');
+  const m=document.createElement('div');m.className='cm'+(who==='u'?' usr':'');
+  if(txt==='typing'){m.innerHTML='<div class="cav ai">✨</div><div class="cb ai"><div class="typing"><span></span><span></span><span></span></div></div>';m.id='typm'}
+  else{m.innerHTML='<div class="cav '+(who==='u'?'u':'ai')+'">'+(who==='u'?'💕':'✨')+'</div><div class="cb '+(who==='u'?'u':'ai')+'">'+txt+'</div>'}
+  box.appendChild(m);box.scrollTop=box.scrollHeight;
+}
+function rmTyping(){const t=document.getElementById('typm');if(t)t.remove()}
+
+async function askAI(prompt,choiceLabel){
+  let txt='';
+  if(gk){try{
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+gm+':generateContent?key='+gk,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:"You are Riyu's warm, loving birthday best friend guiding her through a magical journey. Be warm, use emojis sparingly. Address her as Riyu. 2-3 sentences max."}]},contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:150,temperature:.85}})});
+    const d=await r.json();txt=d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+  }catch(e){console.log(e)}}
+  if(!txt){const fb=["That's so you, Riyu! 💕 Tell me more — what does this mean to you?","Love that choice! ✨ Paint me a picture — what does this look like in your life?","Yesss! 🌟 I'm curious — what's the feeling behind this one?","Beautiful! 💫 If you could describe this in one vivid moment, what would it be?","I knew it! 🦋 What makes this feel like the right path for you?"];txt=fb[stop%fb.length]}
+  addChat('ai',txt);
+  document.getElementById('iw').style.display='flex';
+  document.getElementById('jIn').focus();
+}
+
+function sendMsg(){
+  const inp=document.getElementById('jIn'),txt=inp.value.trim();if(!txt)return;
+  inp.value='';addChat('u',txt);
+  answers.push({stop,text:txt,title:W[world].stops[stop].t});
+  earnCol(stop);
+  document.getElementById('iw').style.display='none';
+  addChat('ai','typing');
+  setTimeout(async()=>{
+    rmTyping();
+    let fb='';
+    if(gk){try{
+      const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+gm+':generateContent?key='+gk,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:"You are Riyu's warm birthday bestie. She shared something personal. Respond with genuine warmth, validate her dream, short encouraging affirmation. 1-2 sentences, emoji."}]},contents:[{role:'user',parts:[{text:'Riyu said: "'+txt+'"'}]}],generationConfig:{maxOutputTokens:100,temperature:.85}})});
+      const d=await r.json();fb=d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    }catch{}}
+    if(!fb){const fs=["That's beautiful, Riyu! 🌟 I can see that for you.","Love it! 💕 You're going to make it happen.","Gave me chills! ✨ This is YOUR year.","You're glowing! 🦋 Hold onto that feeling.","Yes!! 💫 Riyu energy at its finest!"];fb=fs[stop%fs.length]}
+    addChat('ai',fb);
+    document.getElementById('nxtW').style.display='block';
+  },900);
+}
+document.getElementById('jIn').onkeydown=e=>{if(e.key==='Enter')sendMsg()};
+
+function nextStop(){
+  stop++;
+  if(stop>=W[world].stops.length){buildVB();show('Svision')}
+  else{buildScene();loadStop()}
+}
+
+/* ═══════════════════════════════════════
+   VISION BOARD
+   ═══════════════════════════════════════ */
+function buildVB(){
+  const w=W[world];
+  document.getElementById('vbT').textContent=w.label;
+  const g=document.getElementById('vbG');g.innerHTML='';
+  answers.forEach((a,i)=>{
+    const c=document.createElement('div');c.className='vb-c';c.style.animationDelay=(i*.12)+'s';
+    c.innerHTML='<div class="vb-c-i">'+w.icons[i]+'</div><div class="vb-c-t">'+a.title+'</div><textarea data-i="'+i+'">'+a.text+'</textarea>';
+    g.appendChild(c);
+  });
+  g.querySelectorAll('textarea').forEach(t=>{t.style.height=t.scrollHeight+'px';t.oninput=function(){this.style.height='auto';this.style.height=this.scrollHeight+'px';answers[this.dataset.i].text=this.value}});
+  confetti(35);
+}
+
+/* ═══════════════════════════════════════
+   KEEPSAKE
+   ═══════════════════════════════════════ */
+async function showKeep(){
+  show('Skeep');
+  const w=W[world];
+  document.getElementById('ksL').textContent=w.label;
+  document.getElementById('ksW').textContent='"'+wish+'"';
+  const it=document.getElementById('ksI');it.innerHTML='';
+  w.icons.forEach(ic=>{const s=document.createElement('span');s.textContent=ic;it.appendChild(s)});
+  let aff='';
+  if(gk){try{
+    const sum=answers.map((a,i)=>w.stops[i].t+': '+a.text).join('. ');
+    const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+gm+':generateContent?key='+gk,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:"Write a warm, personal birthday affirmation for Riyu based on her dreams. Like a love letter from the universe. 3-4 sentences, poetic but genuine. Use her name."}]},contents:[{role:'user',parts:[{text:"Riyu's wish: \""+wish+"\". Dreams from "+w.name+": "+sum}]}],generationConfig:{maxOutputTokens:200,temperature:.9}})});
+    const d=await r.json();aff=d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+  }catch{}}
+  if(!aff)aff="Dear Riyu, the universe heard every wish you whispered today. Your dreams aren't just hopes — they're promises waiting to unfold. This year belongs to you, and every step you take is exactly right. Happy Birthday, beautiful soul. 🌟💕";
+  document.getElementById('ksA').textContent=aff;
+  confetti(45);
+}
+
+function restart(){
+  document.body.className='';world=null;stop=0;answers=[];cLeft=5;
+  document.getElementById('cakeS').querySelectorAll('.candle').forEach(c=>c.remove());
+  buildCake();document.getElementById('cakeGlow').classList.remove('off');
+  document.getElementById('cakeH').textContent='5 candles left...';
+  document.getElementById('wishI').value='';
+  show('Scake');
+}
+</script>
+</body>
+</html>
